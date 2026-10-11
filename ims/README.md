@@ -143,6 +143,6 @@ python -m unittest discover -s tests -v
 
 ## Project status
 
-IMS is an experimental personal project. Its core package validation, inventory, planning, installation, and restoration workflows are implemented. Restoration results depend on the target system, configured repositories, and the accuracy of the selected manifest.
+IMS is an experimental personal project. Its core package validation, inventory, planning, installation, and restoration workflows are implemented. Restoration results depend on the target system, configured repositories, and the accuracy of the selected manifest. And most of the packages are what i personally would want to use in every fresh install of an arch based distro.
 
 Made by nmesoma.
