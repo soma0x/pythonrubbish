@@ -14,7 +14,7 @@ print(r"""
                            
 
     Speed Run My Recon
-        by nmesoma
+        by nmesoma0x
 """)
 
 addr = sys.argv[1] if len(sys.argv) > 1 else input("input ip: ")
