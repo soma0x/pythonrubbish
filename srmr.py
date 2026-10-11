@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import sys
 import subprocess
 
 print(r"""
@@ -17,7 +17,7 @@ print(r"""
         by nmesoma
 """)
 
-addr = input("Input IP/hostname: ").strip()
+addr = sys.argv[1] if len(sys.argv) > 1 else input("input ip: ")
 
 if not addr:
     print("Error: No target provided.")
