@@ -1,9 +1,12 @@
+
 from pathlib import Path
 import tomllib
 
 
 PROJECT_DIR = Path(__file__).resolve().parent
 MANIFEST_FILE = PROJECT_DIR / "config" / "packages.toml"
+REVIEW_MANIFEST_FILE = PROJECT_DIR / "config" / "packages-review.toml"
+
 ALLOWED_CATEGORIES = {
     "desktop",
     "development",
@@ -12,17 +15,31 @@ ALLOWED_CATEGORIES = {
     "media",
 }
 
-def load_manifest():
-    if not MANIFEST_FILE.exists():
-        raise FileNotFoundError(
-            f"Manifest not found: {MANIFEST_FILE}"
-        )
+REVIEW_CATEGORIES = ALLOWED_CATEGORIES | {
+    "audio",
+    "cachyos",
+    "graphics",
+    "maintenance",
+    "media-support",
+    "networking",
+    "package-management",
+    "shell",
+    "storage",
+    "system",
+    "utilities",
+    "review",
+}
 
-    with MANIFEST_FILE.open("rb") as file:
+
+def load_manifest(path=MANIFEST_FILE):
+    if not path.exists():
+        raise FileNotFoundError(f"Manifest not found: {path}")
+
+    with path.open("rb") as file:
         return tomllib.load(file)
 
 
-def validate_manifest(manifest):
+def validate_manifest(manifest, allowed_categories=ALLOWED_CATEGORIES):
     errors = []
 
     if not isinstance(manifest, dict):
@@ -34,10 +51,8 @@ def validate_manifest(manifest):
     seen_packages = {}
 
     for category, details in manifest.items():
-        if category not in ALLOWED_CATEGORIES:
-            errors.append(
-                f"{category!r}: unknown category."
-            )
+        if category not in allowed_categories:
+            errors.append(f"{category!r}: unknown category.")
 
         if not isinstance(details, dict):
             errors.append(
@@ -71,18 +86,14 @@ def validate_manifest(manifest):
     return errors
 
 
-
-
 def main():
     manifest = load_manifest()
     errors = validate_manifest(manifest)
 
     if errors:
         print("Manifest validation failed:")
-
         for error in errors:
             print(f"  - {error}")
-
         raise SystemExit(1)
 
     print("Manifest validation passed.")
@@ -90,8 +101,6 @@ def main():
 
     for category, details in manifest.items():
         print(f"{category}: {len(details['packages'])} packages")
-
-        
 
 
 if __name__ == "__main__":

@@ -66,20 +66,16 @@ packages = [
 packages = [
     "base-devel",
     "code",
-    "dmidecode",
     "git",
     "go",
-    "intel-ucode",
     "meld",
     "nodejs",
     "npm",
-    "perl",
     "pnpm",
     "python",
     "python-defusedxml",
     "python-packaging",
     "python-pip",
-    "texinfo",
     "uv",
 ]
 
@@ -148,6 +144,12 @@ packages = [
     "shelly",
 ]
 
+[review]
+packages = [
+    "perl",
+    "texinfo",
+]
+
 [security]
 packages = [
     "bind",
@@ -211,6 +213,7 @@ packages = [
     "exfatprogs",
     "f2fs-tools",
     "intel-lpmd",
+    "intel-ucode",
     "iwd",
     "jfsutils",
     "limine",
@@ -239,6 +242,7 @@ packages = [
 
 [utilities]
 packages = [
+    "dmidecode",
     "fprintd",
     "hwinfo",
     "man-db",

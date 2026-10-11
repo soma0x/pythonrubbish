@@ -30,11 +30,10 @@ RULES = {
         "nano", "vim", "less", "ripgrep",
         "fastfetch", "btop", "duf", "glances",
     ],
+    
     "development": [
         "base-devel", "git", "python", "nodejs", "npm",
-        "pnpm", "go", "uv", "code", "meld",
-        "perl", "texinfo", "python-defusedxml",
-        "python-packaging", "python-pip",
+        "pnpm", "go", "uv", "meld",
     ],
     "security": [
         "nmap", "gobuster", "metasploit", "wireshark",
@@ -57,10 +56,10 @@ RULES = {
         "rsync", "sysfsutils",
     ],
     "utilities": [
-        "fprintd", "hwinfo", "man-db",
-        "man-pages", "pkgfile", "plocate",
-        "pv", "s-nail", "unrar", "unzip",
-        "wget", "which", "xdg-user-dirs",
+    "fprintd", "hwinfo", "dmidecode", "man-db",
+    "man-pages", "pkgfile", "plocate", "pv",
+    "s-nail", "unrar", "unzip", "wget",
+    "which", "xdg-user-dirs",
     ],
     "media-support": [
         "gst-plugin-va", "libgsf",
@@ -127,7 +126,11 @@ def load_existing_categories():
 
 def suggest_category(package):
     name = package.lower()
+    if name == "code":
+        return "development"
 
+    if name == "intel-ucode":
+        return "system"
     for category, keywords in RULES.items():
         if any(keyword in name for keyword in keywords):
             return category

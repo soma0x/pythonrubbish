@@ -1,19 +1,25 @@
+
 import argparse
 import subprocess
 import sys
+from pathlib import Path
 
+
+PROJECT_DIR = Path(__file__).resolve().parent
 
 COMMANDS = {
     "validate": "validate.py",
     "classify": "classify.py",
     "audit": "audit.py",
     "plan": "plan.py",
+    "install": "install.py",
+    "restore": "install.py",
 }
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="IMS: Linux inventory, auditing and restoration planning"
+        description="IMS: Install My Shit...made by nmesoma"
     )
     parser.add_argument(
         "command",
@@ -22,10 +28,15 @@ def main():
     )
 
     args = parser.parse_args()
-    script = COMMANDS[args.command]
+    script = PROJECT_DIR / COMMANDS[args.command]
+
+    command = [sys.executable, str(script)]
+
+    if args.command == "restore":
+        command.append("--restore")
 
     result = subprocess.run(
-        [sys.executable, script],
+        command,
         check=False,
     )
 
