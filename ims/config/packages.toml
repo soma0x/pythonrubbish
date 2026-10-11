@@ -1,0 +1,41 @@
+
+[desktop]
+packages = [
+    "hyprland",
+    "hypridle",
+    "hyprlock",
+    "noctalia-greeter",
+    "cachyos-hypr-noctalia",
+]
+
+[development]
+packages = [
+    "git",
+    "python",
+    "python-pip",
+    "go",
+    "nodejs",
+    "npm",
+    "pnpm",
+    "uv",
+    "base-devel",
+]
+
+[security]
+packages = [
+    "nmap",
+    "gobuster",
+    "metasploit",
+    "wireshark-qt",
+]
+
+[gaming]
+packages = [
+    "steam",
+]
+
+[media]
+packages = [
+    "firefox",
+    "vlc",
+]

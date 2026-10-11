@@ -1,0 +1,255 @@
+# IMS suggested package classifications
+# Review before using these categories for restoration.
+
+[audio]
+packages = [
+    "alsa-firmware",
+    "alsa-plugins",
+    "alsa-utils",
+    "gst-plugin-pipewire",
+    "pavucontrol",
+    "pipewire-alsa",
+    "pipewire-pulse",
+    "sof-firmware",
+    "wireplumber",
+]
+
+[cachyos]
+packages = [
+    "cachyos-fish-config",
+    "cachyos-hello",
+    "cachyos-hooks",
+    "cachyos-kernel-manager",
+    "cachyos-keyring",
+    "cachyos-micro-settings",
+    "cachyos-mirrorlist",
+    "cachyos-packageinstaller",
+    "cachyos-plymouth-bootanimation",
+    "cachyos-plymouth-theme",
+    "cachyos-rate-mirrors",
+    "cachyos-settings",
+    "cachyos-snapper-support",
+    "cachyos-v3-mirrorlist",
+    "cachyos-v4-mirrorlist",
+    "cachyos-wallpapers",
+    "cachyos-zsh-config",
+    "chwd",
+    "hwdetect",
+    "linux-cachyos-headers",
+    "linux-cachyos-lts",
+    "linux-cachyos-lts-headers",
+]
+
+[desktop]
+packages = [
+    "awesome-terminal-fonts",
+    "cachyos-hypr-noctalia",
+    "cantarell-fonts",
+    "dolphin",
+    "hypridle",
+    "hyprland",
+    "hyprlock",
+    "noctalia-greeter",
+    "noto-fonts",
+    "noto-fonts-cjk",
+    "noto-fonts-emoji",
+    "plymouth",
+    "ttf-bitstream-vera",
+    "ttf-dejavu",
+    "ttf-jetbrains-mono",
+    "ttf-liberation",
+    "ttf-meslo-nerd",
+    "ttf-opensans",
+]
+
+[development]
+packages = [
+    "base-devel",
+    "code",
+    "dmidecode",
+    "git",
+    "go",
+    "intel-ucode",
+    "meld",
+    "nodejs",
+    "npm",
+    "perl",
+    "pnpm",
+    "python",
+    "python-defusedxml",
+    "python-packaging",
+    "python-pip",
+    "texinfo",
+    "uv",
+]
+
+[gaming]
+packages = [
+    "steam",
+]
+
+[graphics]
+packages = [
+    "intel-media-driver",
+    "lib32-mesa",
+    "lib32-opencl-mesa",
+    "lib32-vulkan-intel",
+    "mesa-utils",
+    "opencl-mesa",
+    "vpl-gpu-rt",
+    "vulkan-intel",
+]
+
+[maintenance]
+packages = [
+    "cpupower",
+    "diffutils",
+    "logrotate",
+    "lsb-release",
+    "pacman-contrib",
+    "rebuild-detector",
+    "reflector",
+    "rsync",
+    "sysfsutils",
+]
+
+[media]
+packages = [
+    "ffmpegthumbnailer",
+    "firefox",
+    "gst-libav",
+    "gst-plugins-bad",
+    "gst-plugins-ugly",
+    "libdvdcss",
+    "vlc",
+    "vlc-plugins-all",
+    "zen-browser-bin",
+]
+
+[media-support]
+packages = [
+    "gst-plugin-va",
+    "libgsf",
+    "libopenraw",
+    "poppler-glib",
+]
+
+[networking]
+packages = [
+    "dnsmasq",
+    "inetutils",
+    "netctl",
+    "nss-mdns",
+    "xl2tpd",
+]
+
+[package-management]
+packages = [
+    "shelly",
+]
+
+[security]
+packages = [
+    "bind",
+    "ethtool",
+    "gobuster",
+    "metasploit",
+    "nmap",
+    "openssh",
+    "tailscale",
+    "ufw",
+    "ufw-extras",
+    "wireshark-qt",
+]
+
+[shell]
+packages = [
+    "alacritty",
+    "bash-completion",
+    "btop",
+    "duf",
+    "fastfetch",
+    "glances",
+    "kitty",
+    "less",
+    "micro",
+    "nano",
+    "nano-syntax-highlighting",
+    "neovim",
+    "ripgrep",
+    "vim",
+]
+
+[storage]
+packages = [
+    "dmraid",
+    "fsarchiver",
+    "hdparm",
+    "lsscsi",
+    "mtools",
+    "nilfs-utils",
+    "sg3_utils",
+]
+
+[system]
+packages = [
+    "accountsservice",
+    "base",
+    "bluez",
+    "bluez-hid2hci",
+    "bluez-libs",
+    "bluez-obex",
+    "bluez-utils",
+    "btrfs-assistant",
+    "btrfs-progs",
+    "cryptsetup",
+    "device-mapper",
+    "dosfstools",
+    "e2fsprogs",
+    "efibootmgr",
+    "efitools",
+    "exfatprogs",
+    "f2fs-tools",
+    "intel-lpmd",
+    "iwd",
+    "jfsutils",
+    "limine",
+    "limine-mkinitcpio-hook",
+    "limine-snapper-sync",
+    "linux-cachyos",
+    "linux-firmware",
+    "lvm2",
+    "mdadm",
+    "mkinitcpio",
+    "modemmanager",
+    "networkmanager",
+    "networkmanager-openvpn",
+    "nfs-utils",
+    "os-prober",
+    "power-profiles-daemon",
+    "realtime-privileges",
+    "smartmontools",
+    "snapper",
+    "sudo",
+    "usb_modeswitch",
+    "usbutils",
+    "wpa_supplicant",
+    "xfsprogs",
+]
+
+[utilities]
+packages = [
+    "fprintd",
+    "hwinfo",
+    "man-db",
+    "man-pages",
+    "pkgfile",
+    "plocate",
+    "pv",
+    "s-nail",
+    "unrar",
+    "unzip",
+    "wget",
+    "which",
+    "xdg-user-dirs",
+]

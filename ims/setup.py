@@ -1,101 +1,137 @@
+
 from pathlib import Path
 import argparse
 import re
-import subprocess
+import tomllib
 
 
+PROJECT_DIR = Path(__file__).resolve().parent
+MANIFEST_FILE = PROJECT_DIR / "config" / "packages.toml"
+INVENTORY_FILE = Path.home() / "savefiles" / "packages-explicit.txt"
+
+PACKAGE_PATTERN = re.compile(r"[A-Za-z0-9@._+-]+")
 
 
-PACKAGE_FILE = Path.home() / "savefiles" / "packages-explicit.txt"
-
-
-
-
-def load_packages():
-    if not PACKAGE_FILE.exists():
+def load_inventory():
+    if not INVENTORY_FILE.exists():
         raise FileNotFoundError(
-                f"Package list not found: {PACKAGE_FILE}"
+            f"Inventory not found: {INVENTORY_FILE}"
         )
 
-    packages = PACKAGE_FILE.read_text().splitlines()
+    packages = {
+        line.strip()
+        for line in INVENTORY_FILE.read_text().splitlines()
+        if line.strip()
+    }
 
-    packages = [
-            package.strip()
-            for package in packages
-            if package.strip()
-    ]
-
-    invalid = [
-            package
-            for package in packages
-            if not re.fullmatch(r"[A-Za-z0-9@._+-]+", package)
-    ]
+    invalid = sorted(
+        package for package in packages
+        if not PACKAGE_PATTERN.fullmatch(package)
+    )
 
     if invalid:
         raise ValueError(f"Invalid package names: {invalid}")
 
-
-    return list(dict.fromkeys(packages))
-
+    return packages
 
 
-def show_plan(packages):
-    print(f"\nLoaded {len(packages)} packages.")
-    print("\nPackage installation plan:\n")
-
-    for package in packages:
-        print(f" [ ] {package}")
-
-
-def install_packages(packages):
-    command = [
-            "sudo",
-            "pacman",
-            "-S",
-            "--needed",
-            *packages,
-    ]
-
-    print("\nStarting package installation...\n")
-
-    result = subprocess.run(command, check=False)
-
-    if result.returncode != 0:
-        raise SystemExit(
-                f"Package installation failed with "
-                f"exiting {result.returncode}"
+def load_manifest():
+    if not MANIFEST_FILE.exists():
+        raise FileNotFoundError(
+            f"Manifest not found: {MANIFEST_FILE}"
         )
 
+    with MANIFEST_FILE.open("rb") as file:
+        config = tomllib.load(file)
+
+    categorized = {}
+
+    for category, details in config.items():
+        packages = details.get("packages", [])
+
+        if not isinstance(packages, list):
+            raise ValueError(
+                f"{category}: packages must be a list"
+            )
+
+        for package in packages:
+            if not isinstance(package, str):
+                raise ValueError(
+                    f"{category}: package names must be strings"
+                )
+
+            if not PACKAGE_PATTERN.fullmatch(package):
+                raise ValueError(
+                    f"{category}: invalid package name {package!r}"
+                )
+
+            if package in categorized:
+                raise ValueError(
+                    f"{package!r} appears in multiple categories"
+                )
+
+            categorized[package] = category
+
+    return categorized
+
+
+def show_report(inventory, categorized):
+    known = inventory & categorized.keys()
+    unknown = categorized.keys() - inventory
+    uncategorized = inventory - categorized.keys()
+
+    print("\n=== IMS PACKAGE REPORT ===\n")
+    print(f"Inventory packages: {len(inventory)}")
+    print(f"Categorized matches: {len(known)}")
+    print(f"Manifest-only packages: {len(unknown)}")
+    print(f"Uncategorized packages: {len(uncategorized)}")
+
+    print("\n--- Categories ---")
+
+    categories = sorted(set(categorized.values()))
+
+    for category in categories:
+        names = sorted(
+            package
+            for package, group in categorized.items()
+            if group == category
+        )
+        print(f"\n{category} ({len(names)}):")
+        for name in names:
+            print(f"  [x] {name}")
+
+    if unknown:
+        print("\n--- In manifest, not in inventory ---")
+        for name in sorted(unknown):
+            print(f"  [?] {name}")
+
+    if uncategorized:
+        print("\n--- Needs classification ---")
+        for name in sorted(uncategorized):
+            print(f"  [ ] {name}")
 
 
 def main():
     parser = argparse.ArgumentParser(
-            description="ims: install my shit"
+        description="IMS: Linux setup and restoration tool"
     )
-
     parser.add_argument(
-            "--install",
-            action="store_true",
-            help="Actually install packages",
+        "--dry-run",
+        action="store_true",
+        help="Accepted for explicit dry-run mode",
     )
-
     args = parser.parse_args()
 
-
     try:
-        packages = load_packages()
-        show_plan(packages)
+        inventory = load_inventory()
+        categorized = load_manifest()
+        show_report(inventory, categorized)
 
-        if args.install:
-            install_packages(packages)
-        else:
-            print("\nDry run only. nothing installed relax")
-            print("use --install when you're man enough or woman idk")
+        print("\nReport complete. No system changes made.")
 
-    except (OSError, ValueError) as error:
-        raise SystemExit(f"Error: {error}")
+    except (OSError, ValueError, tomllib.TOMLDecodeError) as error:
+        raise SystemExit(f"IMS error: {error}")
 
 
-if __name__  == "__main__":
+if __name__ == "__main__":
     main()
-
